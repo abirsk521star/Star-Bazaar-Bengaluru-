@@ -34,7 +34,7 @@ footer{background:var(--dark);color:#fff;text-align:center;padding:28px 16px;mar
 @media(max-width:760px){header{flex-wrap:wrap;padding:14px 5%}nav{order:3;width:100%;justify-content:space-between;gap:8px}.hero{margin:16px;padding:30px 7%;grid-template-columns:1fr}.fruit-art{font-size:100px}.grid{grid-template-columns:repeat(2,1fr)}.info{grid-template-columns:1fr}}
 </style></head>
 <body>
-<div class="top">Fresh fruit delivery in Bengaluru • Cash on Delivery available</div>
+<div class="top">Fresh fruit delivery in Bengaluru • FREE DELIVERY • Cash on Delivery</div>
 <header><div class="logo">★ Star <span>Bazaar</span></div>
 <nav><a href="#home">Home</a><a href="#fruits">Shop Fruits</a><a href="#about">About</a><a href="#contact">Contact</a></nav>
 <button class="cart" onclick="showCart()">🛒 Cart: <span id="count">0</span></button></header>
@@ -53,7 +53,8 @@ footer{background:var(--dark);color:#fff;text-align:center;padding:28px 16px;mar
 <label for="address">Delivery address in Bengaluru</label><textarea id="address" required placeholder="House/flat, street, area, PIN code"></textarea>
 <label for="notes">Order notes (optional)</label><input id="notes" placeholder="Preferred delivery time or other notes">
 <p><b>Payment method: Cash on Delivery (COD) only</b></p>
-<button class="order-btn" type="submit">Send COD Order on WhatsApp</button></form></section>
+<p><b>Delivery Charge: FREE</b></p>
+  <button class="order-btn" type="submit">Send COD Order on WhatsApp</button></form></section>
 <div class="info" id="about"><div>🍃<br><b>Fresh Selection</b><br><small>Fruit-focused collection</small></div>
 <div>🧺<br><b>Easy Shopping</b><br><small>Simple cart and ordering</small></div>
 <div>💚<br><b>Cash on Delivery</b><br><small>No online payment</small></div></div></section></main>
@@ -61,10 +62,15 @@ footer{background:var(--dark);color:#fff;text-align:center;padding:28px 16px;mar
 <div id="notice"></div>
 <script>
 const products=[
-{name:"Apples",emoji:"🍎",price:160,unit:"per kg"},{name:"Bananas",emoji:"🍌",price:60,unit:"per dozen"},
-{name:"Mangoes",emoji:"🥭",price:120,unit:"per kg"},{name:"Oranges",emoji:"🍊",price:90,unit:"per kg"},
-{name:"Grapes",emoji:"🍇",price:100,unit:"per kg"},{name:"Watermelon",emoji:"🍉",price:35,unit:"per kg"},
-{name:"Strawberries",emoji:"🍓",price:180,unit:"per 250 g"},{name:"Kiwi",emoji:"🥝",price:50,unit:"each"}];
+{name:"Apples",emoji:"🍎",price:250,unit:"per kg"},
+{name:"Bananas",emoji:"🍌",price:50,unit:"per kg"},
+{name:"Mangoes",emoji:"🥭",price:200,unit:"per kg"},
+{name:"Papaya",emoji:"🍈",price:120,unit:"per kg"},
+{name:"Pomegranates",emoji:"🍎",price:200,unit:"per kg"},
+{name:"Watermelon",emoji:"🍉",price:50,unit:"per kg"},
+{name:"Grapes",emoji:"🍇",price:150,unit:"per kg"},
+{name:"Oranges",emoji:"🍊",price:150,unit:"per kg"}
+];
 const cart=[];
 document.getElementById('products').innerHTML=products.map((p,i)=>`<article class="card"><div class="pic">${p.emoji}</div><h3>${p.name}</h3><div class="unit">${p.unit}</div><div class="price">₹${p.price}</div><button class="add" onclick="add(${i})">Add to Cart</button></article>`).join('');
 function updateCart(){document.getElementById('count').textContent=cart.length;document.getElementById('order-summary').textContent=cart.length?'Cart: '+cart.map(p=>p.name).join(', ')+' | Indicative total: ₹'+cart.reduce((s,p)=>s+p.price,0):'Your cart is currently empty.';}
@@ -75,7 +81,7 @@ const grouped={};cart.forEach(p=>{if(!grouped[p.name])grouped[p.name]={qty:0,pri
 const itemLines=Object.entries(grouped).map(([n,v])=>`${n} x ${v.qty} (${v.unit}) - ₹${v.price*v.qty}`).join('\n');
 const total=cart.reduce((s,p)=>s+p.price,0);
 const customer=document.getElementById('customer').value.trim(),phone=document.getElementById('phone').value.trim(),address=document.getElementById('address').value.trim(),notes=document.getElementById('notes').value.trim();
-const message=`Hello Star Bazaar! I would like to place a Cash on Delivery order.\n\nName: ${customer}\nCustomer phone: ${phone}\nDelivery address: ${address}\n\nItems:\n${itemLines}\n\nIndicative total: ₹${total}\nPayment: Cash on Delivery\nNotes: ${notes}\n\nPlease confirm availability, final price and delivery.`;
+const message=`Hello Star Bazaar! I would like to place a Cash on Delivery order.\n\nName: ${customer}\nCustomer phone: ${phone}\nDelivery address: ${address}\n\nItems:Delivery Charge: FREE\n${itemLines}\n\nIndicative total: ₹${total}\nPayment: Cash on Delivery\nNotes: ${notes}\n\nPlease confirm availability, final price and delivery.`;
 window.open('https://wa.me/918906194384?text='+encodeURIComponent(message),'_blank');}
 function toast(msg){const n=document.getElementById('notice');n.textContent=msg;n.style.display='block';setTimeout(()=>n.style.display='none',1800);}
 </script></body></html>
